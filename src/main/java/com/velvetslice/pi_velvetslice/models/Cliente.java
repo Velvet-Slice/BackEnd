@@ -4,8 +4,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "clientes")
 public class Cliente {
@@ -20,10 +27,6 @@ public class Cliente {
     @Column(name = "nomeCli", nullable = false) // Mapeia para a coluna 'nomeCli'
     private String nome;
 
-    @Past(message = "A data de nascimento deve ser uma data no passado.")
-    @Column(name = "data_nascimentoCli")
-    private LocalDate dataNascimento;
-
     @Size(max = 20)
     @Column(name = "telefoneCli")
     private String telefone;
@@ -33,13 +36,11 @@ public class Cliente {
     private String cpf;
 
 
-    protected Cliente() {}
-
-
-    public Cliente(String nome, LocalDate dataNascimento, String telefone, String cpf) {
+    public Cliente(String nome,String telefone, String cpf, String senha) {
         this.nome = nome;
-        this.dataNascimento = dataNascimento;
         this.telefone = telefone;
         this.cpf = cpf;
     }
+
+
 }
