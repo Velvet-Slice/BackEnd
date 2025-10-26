@@ -24,7 +24,7 @@ public class Pedido {
 
     @ManyToOne
     @JoinColumn(name = "idCli")
-    private Cliente cliente;
+    private UserCliente cliente;
 
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
@@ -33,7 +33,7 @@ public class Pedido {
 
     protected Pedido() {}
 
-    public Pedido(Long id, LocalDateTime dataPedido, LocalDate dataEntrega, Cliente cliente, List<itemPedido> itens) {
+    public Pedido(Long id, LocalDateTime dataPedido, LocalDate dataEntrega, UserCliente cliente, List<itemPedido> itens) {
         this.id = id;
         this.dataPedido = dataPedido;
         this.dataEntrega = dataEntrega;
