@@ -14,7 +14,6 @@ public class Categoria {
     @Column(name = "nomeCat")
     private String nome;
 
-
     protected Categoria() {
     }
 

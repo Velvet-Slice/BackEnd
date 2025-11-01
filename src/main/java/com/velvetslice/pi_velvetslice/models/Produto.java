@@ -32,14 +32,11 @@ public class Produto {
     @Column(name = "precoProd", nullable = false) // Mapeia para 'precoProd'
     private BigDecimal preco; // CORRIGIDO: Sempre use BigDecimal para dinheiro
 
-
     @ManyToOne
     @JoinColumn(name = "idCat") // Mapeia a chave estrangeira 'idCat'
     private Categoria categoria;
 
-
     protected Produto() {}
-
 
     public Produto(String nome, String imagemUrl, String descricao, BigDecimal preco, Categoria categoria) {
         this.nome = nome;
@@ -49,4 +46,51 @@ public class Produto {
         this.categoria = categoria;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getImagemUrl() {
+        return imagemUrl;
+    }
+
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getPreco() {
+        return preco;
+    }
+
+    public void setPreco(BigDecimal preco) {
+        this.preco = preco;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
 }
