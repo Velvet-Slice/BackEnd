@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class itemPedido {
+public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +34,7 @@ public class itemPedido {
     @Column(name = "preco_unitario", nullable = false)
     private BigDecimal precoUnitario;
 
-    public itemPedido(Long id, Pedido pedido, Produto produto, int quantidade, BigDecimal precoUnitario) {
+    public ItemPedido(Long id, Pedido pedido, Produto produto, int quantidade, BigDecimal precoUnitario) {
         this.id = id;
         this.pedido = pedido;
         this.produto = produto;
