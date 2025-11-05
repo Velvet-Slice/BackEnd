@@ -4,9 +4,16 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "funcionarios")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Funcionario {
 
     @Id
@@ -32,9 +39,6 @@ public class Funcionario {
     @Size(max = 255)
     @Column(name = "emailFunc", nullable = false, unique = true)
     private String email;
-
-    protected Funcionario() {}
-
 
     public Funcionario(String nome, String cpf, String telefone, String email) {
         this.nome = nome;

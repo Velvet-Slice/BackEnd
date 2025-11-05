@@ -1,9 +1,16 @@
 package com.velvetslice.pi_velvetslice.models;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "categorias")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Categoria {
 
     @Id
@@ -11,11 +18,9 @@ public class Categoria {
     @Column(name = "idCat")
     private Long id;
 
-    @Column(name = "nomeCat")
+    @Column(name = "nomeCat", nullable = false)
     private String nome;
 
-    protected Categoria() {
-    }
 
     public Categoria(Long id, String nome) {
         this.id = id;

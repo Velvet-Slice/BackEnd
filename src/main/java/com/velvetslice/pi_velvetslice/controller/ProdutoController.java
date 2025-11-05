@@ -19,7 +19,7 @@ public class ProdutoController {
     @Autowired
     private ProdutoService service;
 
-    @GetMapping
+    @GetMapping("/buscar")
     @ResponseStatus(HttpStatus.OK)
     public List<Produto> findAll(){
         return service.getProdutos();
