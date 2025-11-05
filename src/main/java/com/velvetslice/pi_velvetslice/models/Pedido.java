@@ -35,10 +35,10 @@ public class Pedido {
 
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-    private List<itemPedido> itens;
+    private List<ItemPedido> itens;
 
 
-    public Pedido(Long id, LocalDateTime dataPedido, LocalDate dataEntrega, Cliente cliente, List<itemPedido> itens) {
+    public Pedido(Long id, LocalDateTime dataPedido, LocalDate dataEntrega, Cliente cliente, List<ItemPedido> itens) {
         this.id = id;
         this.dataPedido = dataPedido;
         this.dataEntrega = dataEntrega;
