@@ -4,10 +4,18 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "clientes")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cliente {
 
     @Id
@@ -17,7 +25,7 @@ public class Cliente {
 
     @NotBlank(message = "O nome do cliente não pode estar em branco.")
     @Size(max = 255)
-    @Column(name = "nomeCli", nullable = false) // Mapeia para a coluna 'nomeCli'
+    @Column(name = "nomeCli", nullable = false)
     private String nome;
 
     @Past(message = "A data de nascimento deve ser uma data no passado.")
@@ -31,10 +39,6 @@ public class Cliente {
     @NotBlank(message = "O CPF não pode estar em branco.")
     @Column(name = "cpfCli", nullable = false, unique = true)
     private String cpf;
-
-
-    protected Cliente() {}
-
 
     public Cliente(String nome, LocalDate dataNascimento, String telefone, String cpf) {
         this.nome = nome;
