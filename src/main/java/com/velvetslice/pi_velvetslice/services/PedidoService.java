@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PedidoService {
+public class 'PedidoService {
 
     @Autowired
     private PedidoRepository pedidoRepository;
