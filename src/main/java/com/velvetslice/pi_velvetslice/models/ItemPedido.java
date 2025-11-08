@@ -1,11 +1,19 @@
 package com.velvetslice.pi_velvetslice.models;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "itens_pedido") // Mapeia para a nova tabela 'itens_pedido'
-public class itemPedido {
+@Table(name = "itens_pedido")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class ItemPedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,22 +21,20 @@ public class itemPedido {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idPed") // Liga ao Pedido
+    @JoinColumn(name = "idPed", nullable = false)
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "idProd") // Liga ao Produto
+    @JoinColumn(name = "idProd", nullable = false)
     private Produto produto;
 
-    @Column(name = "quantidade")
+    @Column(name = "quantidade", nullable = false)
     private int quantidade;
 
-    @Column(name = "preco_unitario")
+    @Column(name = "preco_unitario", nullable = false)
     private BigDecimal precoUnitario;
 
-    protected itemPedido() {}
-
-    public itemPedido(Long id, Pedido pedido, Produto produto, int quantidade, BigDecimal precoUnitario) {
+    public ItemPedido(Long id, Pedido pedido, Produto produto, int quantidade, BigDecimal precoUnitario) {
         this.id = id;
         this.pedido = pedido;
         this.produto = produto;
