@@ -1,7 +1,7 @@
 package com.velvetslice.pi_velvetslice.controller;
 
 import com.velvetslice.pi_velvetslice.models.Produto;
-import com.velvetslice.pi_velvetslice.models.itemPedido;
+import com.velvetslice.pi_velvetslice.models.ItemPedido;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,9 +28,9 @@ class CarrinhoControllerTest {
     @Test
     void deveAdicionarItemAoCarrinho() {
         // Cria um item fictício para o carrinho
-        List<itemPedido> carrinho = new ArrayList<>();
+        List<ItemPedido> carrinho = new ArrayList<>();
 
-        itemPedido item = new itemPedido();
+        ItemPedido item = new ItemPedido();
         item.setQuantidade(2);
         item.setPrecoUnitario(new BigDecimal("25.50"));
 
