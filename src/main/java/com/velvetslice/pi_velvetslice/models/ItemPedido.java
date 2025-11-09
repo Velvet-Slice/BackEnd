@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Table(name = "itens_pedido")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class ItemPedido {
 
     @Id

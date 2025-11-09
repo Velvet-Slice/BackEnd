@@ -1,6 +1,6 @@
 package com.velvetslice.pi_velvetslice.controller;
 
-import com.velvetslice.pi_velvetslice.models.itemPedido;
+import com.velvetslice.pi_velvetslice.models.ItemPedido;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,12 +22,12 @@ public class CarrinhoController {
     @GetMapping("/adicionarTeste")
     @ResponseBody
     public String adicionarItemTeste(HttpSession session) {
-        List<itemPedido> carrinho = (List<itemPedido>) session.getAttribute("carrinho");
+        List<ItemPedido> carrinho = (List<ItemPedido>) session.getAttribute("carrinho");
         if (carrinho == null) {
             carrinho = new java.util.ArrayList<>();
         }
 
-        itemPedido item = new itemPedido();
+        ItemPedido item = new ItemPedido();
         item.setQuantidade(2);
         item.setPrecoUnitario(new java.math.BigDecimal("25.50"));
 
@@ -43,7 +43,7 @@ public class CarrinhoController {
 
     @GetMapping("/checkout")
     public RedirectView finalizarPedido(HttpSession session) {
-        List<itemPedido> itens = (List<itemPedido>) session.getAttribute("carrinho");
+        List<ItemPedido> itens = (List<ItemPedido>) session.getAttribute("carrinho");
 
         if (itens == null || itens.isEmpty()) {
             String aviso = URLEncoder.encode(
@@ -56,7 +56,7 @@ public class CarrinhoController {
         BigDecimal total = BigDecimal.ZERO;
         StringBuilder mensagem = new StringBuilder("Olá! Gostaria de finalizar meu pedido:\n");
 
-        for (itemPedido i : itens) {
+        for (ItemPedido i : itens) {
             BigDecimal subtotal = i.getPrecoUnitario().multiply(BigDecimal.valueOf(i.getQuantidade()));
             mensagem.append("- ")
                     .append(i.getQuantidade())

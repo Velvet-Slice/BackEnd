@@ -16,7 +16,7 @@ import java.math.BigDecimal; // Importação correta para dinheiro
 @Table(name = "produtos")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Produto {
 
     @Id
