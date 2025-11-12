@@ -3,6 +3,7 @@ package com.velvetslice.pi_velvetslice.Dto;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
+//Teste
 @Getter
 public class LoginUserDto {
     @NotBlank

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-
+//teste
 @Entity
 @Table(name = "itens_pedido")
 @Getter

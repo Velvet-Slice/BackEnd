@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+//teste
 @Entity
 @Table(name = "categorias")
 @Getter

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-
+//teste
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     // Método para checar se o e-mail já existe na tabela 'usuarios' //

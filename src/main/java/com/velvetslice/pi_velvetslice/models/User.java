@@ -13,7 +13,7 @@ import org.springframework.aot.generate.GeneratedTypeReference;
 import java.util.List;
 import java.util.Collection;
 
-
+//teste
 @Entity
 @NoArgsConstructor
 @Table(name = "usuarios")

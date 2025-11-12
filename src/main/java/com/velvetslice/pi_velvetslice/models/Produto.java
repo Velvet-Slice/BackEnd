@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal; // Importação correta para dinheiro
-
+//teste
 @Entity
 @Table(name = "produtos")
 @Getter
