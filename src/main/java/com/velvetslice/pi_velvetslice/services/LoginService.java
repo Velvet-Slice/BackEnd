@@ -5,8 +5,11 @@ import com.velvetslice.pi_velvetslice.exception.AutenticacaoException;
 import com.velvetslice.pi_velvetslice.models.User;
 import com.velvetslice.pi_velvetslice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
+@Service
 public class LoginService {
 
     @Autowired
