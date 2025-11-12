@@ -13,4 +13,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     // Método para checar se o CPF já existe na tabela 'usuarios' //
     Optional<User> findByCpf(String cpf);
+
+    Optional<User> findBySenha(String senha);
 }

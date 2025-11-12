@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jdk.jfr.Name;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.aot.generate.GeneratedTypeReference;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
 import java.util.Collection;
 
@@ -18,7 +18,9 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name = "usuarios")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User {
+@Getter
+@Setter
+ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,7 @@ public abstract class User {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @CPF
+    @CPF(message = "Cpf inválido")
     @NotBlank
     @Column(name = "cpf", nullable = false, unique = true)
     private String cpf;
@@ -42,16 +44,11 @@ public abstract class User {
     @Column(name = "senha", nullable = false)
     private String senha;
 
-    @NotBlank
-    @Column(name = "role", nullable = false)
-    private String role;
 
-    public User(long id, String nome, String email, String cpf, String senha, String role) {
-        this.id = id;
+    public User(String nome, String email, String cpf, String senha) {
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
-        this.role = role;
     }
 }
