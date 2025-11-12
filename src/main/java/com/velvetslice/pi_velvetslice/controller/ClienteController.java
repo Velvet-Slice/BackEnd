@@ -1,6 +1,6 @@
 package com.velvetslice.pi_velvetslice.controller;
 
-import com.velvetslice.pi_velvetslice.dto.ProdutoDto;
+import com.velvetslice.pi_velvetslice.Dto.ProdutoDto;
 import com.velvetslice.pi_velvetslice.models.Produto;
 import com.velvetslice.pi_velvetslice.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;

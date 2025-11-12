@@ -1,4 +1,4 @@
-package com.velvetslice.pi_velvetslice.dto;
+package com.velvetslice.pi_velvetslice.Dto;
 
 public record PedidoDto(Long id) {
 }

@@ -5,10 +5,10 @@ import lombok.Getter;
 
 @Getter
 public class LoginUserDto {
- @NotBlank
+    @NotBlank
     private String email;
 
- @NotBlank
+    @NotBlank
     private String senha;
 
 
