@@ -25,6 +25,7 @@ public class AuthCadastroLoginController {
     @Autowired
     private CadastroService cadastroService;
 
+
     @Autowired
     private LoginService loginService;
 
