@@ -1,6 +1,7 @@
 package com.velvetslice.pi_velvetslice.services;
 
 import com.velvetslice.pi_velvetslice.dto.CadastroUserDto;
+import com.velvetslice.pi_velvetslice.exception.AutenticacaoException;
 import com.velvetslice.pi_velvetslice.models.User;
 import com.velvetslice.pi_velvetslice.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -17,13 +18,13 @@ public class CadastroService {
     public User cadastrarNovoCliente(CadastroUserDto dto) {
 
         if (userRepository.findByCpf(dto.getCpf()).isPresent()) {
-            throw new RuntimeException("Erro: CPF já está cadastrado.");
+            throw new AutenticacaoException("Erro: CPF já está cadastrado.");
         }
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new RuntimeException("Erro: E-mail já está cadastrado.");
+            throw new AutenticacaoException("Erro: E-mail já está cadastrado.");
         }
         if (!dto.getSenha().equals(dto.getConfirmarSenha())){
-            throw new RuntimeException("Erro: As senhas digitadas são diferentes.");
+            throw new AutenticacaoException("Erro: As senhas digitadas são diferentes.");
         }
 
         User novoUsuario = new User(

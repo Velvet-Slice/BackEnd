@@ -4,8 +4,10 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class CadastroUserDto {
     @NotBlank
     private String nome;
@@ -24,7 +26,4 @@ public class CadastroUserDto {
     @NotBlank
     @Size(min =6)
     private String confirmarSenha;
-
-    @Size(max = 20)
-    private String telefone;
 }
