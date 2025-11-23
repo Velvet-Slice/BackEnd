@@ -8,10 +8,14 @@ import java.nio.file.Paths;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Mapeia a URL /imagens-upload/** para a pasta local imagens-upload
+        // Pega o caminho absoluto da pasta "imagens-upload" na raiz do projeto
         String uploadPath = Paths.get("imagens-upload").toUri().toString();
+
+        // Diz ao Spring: "Tudo que vier na URL /imagens-upload/**, procure na pasta
+        // física definida acima"
         registry.addResourceHandler("/imagens-upload/**")
                 .addResourceLocations(uploadPath);
     }

@@ -5,6 +5,7 @@ import com.velvetslice.pi_velvetslice.models.Produto;
 import com.velvetslice.pi_velvetslice.services.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,20 +14,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin(origins = "http://127.0.0.1:5500")
+@CrossOrigin(origins = "*") // Permite acesso do seu Frontend (VS Code/Live Server)
 public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
 
+    // 1. Listar Produtos
     @GetMapping
     public ResponseEntity<List<Produto>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    // Nota: Usamos @ModelAttribute aqui para suportar Upload de Arquivos via
-    // FormData
-    @PostMapping(consumes = { "multipart/form-data" })
+    // 2. Salvar Produto (Com Imagem)
+    // Consumes multipart/form-data é essencial para upload de arquivos
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Produto> salvar(@ModelAttribute ProdutoAdminDto dto) {
         try {
             Produto novoProduto = service.salvar(dto);
@@ -36,16 +38,8 @@ public class ProdutoController {
         }
     }
 
-    // Para edição com arquivo, o método PUT via HTML form às vezes é problemático.
-    // Vamos aceitar POST neste endpoint específico ou configurar o JS para enviar
-    // corretamente.
-    // Padrão REST com FormData geralmente é feito via POST com campo _method ou
-    // direto PUT se o cliente suportar.
-    // Para simplificar, faremos via POST mapeado na URL com ID, ou usamos o JS para
-    // forçar PUT.
-    // O Spring aceita @ModelAttribute no PUT se configurado, mas vamos usar uma
-    // abordagem robusta:
-    @PutMapping(value = "/{id}", consumes = { "multipart/form-data" })
+    // 3. Editar Produto
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Produto> editar(@PathVariable Long id, @ModelAttribute ProdutoAdminDto dto) {
         try {
             Produto produtoAtualizado = service.editar(id, dto);
@@ -57,6 +51,7 @@ public class ProdutoController {
         }
     }
 
+    // 4. Excluir Produto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         try {
