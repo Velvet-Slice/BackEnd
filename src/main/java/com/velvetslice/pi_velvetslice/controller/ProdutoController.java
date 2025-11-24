@@ -14,20 +14,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin(origins = "*") // Permite acesso do seu Frontend (VS Code/Live Server)
+@CrossOrigin(origins = "*")
 public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
 
-    // 1. Listar Produtos
     @GetMapping
     public ResponseEntity<List<Produto>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    // 2. Salvar Produto (Com Imagem)
-    // Consumes multipart/form-data é essencial para upload de arquivos
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Produto> salvar(@ModelAttribute ProdutoAdminDto dto) {
         try {
@@ -38,7 +35,6 @@ public class ProdutoController {
         }
     }
 
-    // 3. Editar Produto
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Produto> editar(@PathVariable Long id, @ModelAttribute ProdutoAdminDto dto) {
         try {
@@ -51,7 +47,6 @@ public class ProdutoController {
         }
     }
 
-    // 4. Excluir Produto
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         try {

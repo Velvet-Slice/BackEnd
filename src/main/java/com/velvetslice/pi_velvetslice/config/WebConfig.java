@@ -4,19 +4,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.nio.file.Paths;
-
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // Pega o caminho absoluto da pasta "imagens-upload" na raiz do projeto
-        String uploadPath = Paths.get("imagens-upload").toUri().toString();
+        // Pega o caminho absoluto de onde o projeto está rodando
+        String diretorioProjeto = System.getProperty("user.dir");
 
-        // Diz ao Spring: "Tudo que vier na URL /imagens-upload/**, procure na pasta
-        // física definida acima"
+        String caminhoImagens = "file:" + diretorioProjeto + "/imagens-upload/";
+
         registry.addResourceHandler("/imagens-upload/**")
-                .addResourceLocations(uploadPath);
+                .addResourceLocations(caminhoImagens);
     }
 }
