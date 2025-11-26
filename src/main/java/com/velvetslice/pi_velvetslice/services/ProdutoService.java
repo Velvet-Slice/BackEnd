@@ -19,7 +19,6 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    // Caminho onde as imagens serão salvas (na raiz do projeto para facilitar)
     private final Path rootLocation = Paths.get("imagens-upload");
 
     public ProdutoService() {
@@ -63,16 +62,13 @@ public class ProdutoService {
         produto.setPreco(dto.getPreco());
         produto.setDescricao(dto.getDescricao());
 
-        // Lógica de upload de imagem
         if (dto.getImagem() != null && !dto.getImagem().isEmpty()) {
             String nomeArquivo = salvarImagem(dto.getImagem());
-            // Salva o caminho relativo para ser acessado via URL
             produto.setImagemUrl("/imagens-upload/" + nomeArquivo);
         }
     }
 
     private String salvarImagem(MultipartFile file) throws IOException {
-        // Gera um nome único para evitar conflitos
         String nomeArquivo = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
         Files.copy(file.getInputStream(), this.rootLocation.resolve(nomeArquivo), StandardCopyOption.REPLACE_EXISTING);
         return nomeArquivo;

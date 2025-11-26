@@ -31,7 +31,6 @@ public class CadastroService {
             throw new AutenticacaoException("Erro: As senhas digitadas são diferentes.");
         }
 
-        // 1. Criar usuário
         User novoUsuario = new User(
                 dto.getNome(),
                 dto.getEmail(),
@@ -41,7 +40,6 @@ public class CadastroService {
 
         novoUsuario = userRepository.save(novoUsuario);
 
-        // 3. Criar cliente vinculado automaticamente
         Cliente cliente = new Cliente();
         cliente.setNome(dto.getNome());
         cliente.setCpf(dto.getCpf());

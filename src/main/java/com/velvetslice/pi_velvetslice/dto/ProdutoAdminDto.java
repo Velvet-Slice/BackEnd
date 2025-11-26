@@ -13,6 +13,5 @@ public class ProdutoAdminDto {
     private BigDecimal preco;
     private String descricao;
 
-    // Campo para receber o arquivo do input type="file"
     private MultipartFile imagem;
 }

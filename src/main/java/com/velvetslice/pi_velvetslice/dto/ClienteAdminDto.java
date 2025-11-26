@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ClienteAdminDto {
-    private Long id; // Necessário para edição/exclusão
+    private Long id;
 
     @NotBlank(message = "O nome é obrigatório")
     private String nome;
@@ -20,6 +20,5 @@ public class ClienteAdminDto {
     @Email(message = "E-mail inválido")
     private String email;
 
-    // A senha pode ser opcional na edição, mas obrigatória no cadastro
     private String senha;
 }

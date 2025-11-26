@@ -18,22 +18,17 @@ public class ClienteController {
     @Autowired
     private ClienteAdminService service;
 
-    // Listar (GET)
     @GetMapping
     public ResponseEntity<List<User>> listar() {
-        // Correção: usa listarTodos() em vez de getProdutos()
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    // Salvar (POST)
     @PostMapping
     public ResponseEntity<User> salvar(@RequestBody ClienteAdminDto dto) {
-        // Correção: recebe um DTO e chama o método salvar do serviço de clientes
         User novoUser = service.salvar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUser);
     }
 
-    // Editar (PUT)
     @PutMapping("/{id}")
     public ResponseEntity<User> editar(@PathVariable Long id, @RequestBody ClienteAdminDto dto) {
         try {
@@ -44,7 +39,6 @@ public class ClienteController {
         }
     }
 
-    // Excluir (DELETE)
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
         try {

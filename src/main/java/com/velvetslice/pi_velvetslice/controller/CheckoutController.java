@@ -26,7 +26,6 @@ public class CheckoutController {
 
         Pedido pedido = checkoutService.checkout(clienteId, dataEntrega);
 
-
         String whatsappUrl = checkoutService.gerarMensagemWhatsapp(pedido);
 
         Map<String, Object> resposta = new HashMap<>();

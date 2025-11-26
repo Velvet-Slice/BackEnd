@@ -22,7 +22,6 @@ public class ClienteAdminService {
 
     @Transactional
     public User salvar(ClienteAdminDto dto) {
-        // Verifica se já existe email ou CPF (lógica simplificada)
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new RuntimeException("Email já cadastrado.");
         }
@@ -31,7 +30,7 @@ public class ClienteAdminService {
         user.setNome(dto.getNome());
         user.setCpf(dto.getCpf());
         user.setEmail(dto.getEmail());
-        user.setSenha(dto.getSenha()); // Em produção, use BCrypt para criptografar
+        user.setSenha(dto.getSenha());
 
         return userRepository.save(user);
     }
@@ -46,7 +45,6 @@ public class ClienteAdminService {
             user.setCpf(dto.getCpf());
             user.setEmail(dto.getEmail());
 
-            // Só atualiza a senha se vier preenchida no formulário
             if (dto.getSenha() != null && !dto.getSenha().isEmpty()) {
                 user.setSenha(dto.getSenha());
             }

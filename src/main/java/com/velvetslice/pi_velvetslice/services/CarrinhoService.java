@@ -27,20 +27,16 @@ public class CarrinhoService {
 
     public Pedido adicionarItem(AddItemCarrinhoDto dto) {
 
-        // Buscar cliente
         Cliente cliente = clienteRepository.findById(dto.getClienteId())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 
-        // Buscar produto
         Produto produto = produtoRepository.findById(dto.getProdutoId())
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
 
-        // Buscar pedido em aberto
         Pedido pedido = pedidoRepository
                 .findByClienteIdAndStatus(cliente.getId(), StatusPedido.ABERTO)
                 .orElse(null);
 
-        // Se não existir carrinho → criar um novo
         if (pedido == null) {
             pedido = new Pedido();
             pedido.setCliente(cliente);
@@ -50,7 +46,6 @@ public class CarrinhoService {
             pedidoRepository.save(pedido);
         }
 
-        // Criar item de pedido
         ItemPedido item = new ItemPedido();
         item.setPedido(pedido);
         item.setProduto(produto);
