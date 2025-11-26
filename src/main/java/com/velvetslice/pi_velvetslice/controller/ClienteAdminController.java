@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/clientes") // Ou "/admin/clientes" se preferir separar
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Para funcionar com seu Frontend
-public class ClienteController {
+@RequestMapping("/admin/clientes") // Endpoint específico para admin
+@CrossOrigin(origins = "http://127.0.0.1:5500") // Permite conexão com seu Frontend
+public class ClienteAdminController {
 
     @Autowired
     private ClienteAdminService service;

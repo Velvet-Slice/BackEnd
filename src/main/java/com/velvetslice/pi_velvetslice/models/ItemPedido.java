@@ -1,10 +1,9 @@
 package com.velvetslice.pi_velvetslice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -12,7 +11,8 @@ import java.math.BigDecimal;
 @Table(name = "itens_pedido")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemPedido {
 
     @Id
@@ -21,24 +21,26 @@ public class ItemPedido {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "idPed", nullable = false)
+    @JoinColumn(name = "idPed")
+    @JsonBackReference
     private Pedido pedido;
 
     @ManyToOne
-    @JoinColumn(name = "idProd", nullable = false)
+    @JoinColumn(name = "idProd")
     private Produto produto;
 
-    @Column(name = "quantidade", nullable = false)
     private int quantidade;
 
-    @Column(name = "preco_unitario", nullable = false)
+    @Column(name = "preco_unitario")
     private BigDecimal precoUnitario;
 
-    public ItemPedido(Long id, Pedido pedido, Produto produto, int quantidade, BigDecimal precoUnitario) {
-        this.id = id;
-        this.pedido = pedido;
-        this.produto = produto;
-        this.quantidade = quantidade;
-        this.precoUnitario = precoUnitario;
+    private BigDecimal subtotal;
+
+    public BigDecimal getSubtotal() {
+        if (subtotal == null && precoUnitario != null) {
+            return precoUnitario.multiply(BigDecimal.valueOf(quantidade));
+        }
+        return subtotal;
     }
+
 }
