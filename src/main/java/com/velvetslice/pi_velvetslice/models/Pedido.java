@@ -31,7 +31,7 @@ public class Pedido {
     private LocalDateTime dataPedido = LocalDateTime.now();
 
     @Column(name = "data_entrega", nullable = false)
-    private LocalDate dataEntrega = LocalDate.now().plusDays(1);
+    private LocalDate dataEntrega;
 
     @ManyToOne
     @JoinColumn(name = "idCli", nullable = false)
@@ -46,6 +46,9 @@ public class Pedido {
 
     @Column(name = "valor_total")
     private BigDecimal valorTotal = BigDecimal.ZERO;
+
+    @Column(name = "descricaoPed", columnDefinition = "TEXT")
+    private String descricao;
 
     public void adicionarItem(ItemPedido item) {
         item.setPedido(this);

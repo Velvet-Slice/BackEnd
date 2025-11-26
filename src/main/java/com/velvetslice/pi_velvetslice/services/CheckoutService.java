@@ -29,6 +29,10 @@ public class CheckoutService {
             throw new RuntimeException("A data de entrega deve ser pelo menos 5 dias após o pedido.");
         }
 
+        if (dataEntrega == null) {
+            throw new RuntimeException("Data de entrega obrigatória.");
+        }
+
         pedido.setDataEntrega(dataEntrega);
 
         pedido.setStatus(StatusPedido.EM_NEGOCIACAO);
@@ -51,7 +55,7 @@ public class CheckoutService {
 
         StringBuilder msg = new StringBuilder();
         msg.append(" *Novo Pedido*%0A%0A");
-        msg.append(" *Número:* ").append(pedido.getId()).append("%0A");
+        msg.append(" *Número do pedido:* ").append(pedido.getId()).append("%0A");
         msg.append(" *Cliente:* ").append(pedido.getCliente().getNome()).append("%0A");
         msg.append(" *Data do Pedido:* ").append(dataPedidoFormatada).append("%0A");
         msg.append(" *Data da Entrega:* ").append(dataEntregaFormatada).append("%0A");
