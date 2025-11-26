@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NoArgsConstructor
@@ -21,23 +22,26 @@ public class User {
     private long id;
 
     @NotBlank
-    @Column
+    @Column(nullable = false)
     private String nome;
 
     @Email(message = "Email inválido")
     @NotBlank
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @CPF(message = "Cpf inválido")
     @NotBlank
-    @Column(name = "cpf", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String cpf;
 
     @NotBlank
-    @Column(name = "senha", nullable = false)
+    @Column(nullable = false)
     private String senha;
 
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cliente cliente;
 
     public User(String nome, String email, String cpf, String senha) {
         this.nome = nome;
@@ -46,5 +50,3 @@ public class User {
         this.senha = senha;
     }
 }
-
-

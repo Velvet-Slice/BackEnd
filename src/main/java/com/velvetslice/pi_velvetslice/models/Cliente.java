@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @Table(name = "clientes")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Cliente {
 
     @Id
@@ -39,6 +39,10 @@ public class Cliente {
     @NotBlank(message = "O CPF não pode estar em branco.")
     @Column(name = "cpfCli", nullable = false, unique = true)
     private String cpf;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 
     public Cliente(String nome, LocalDate dataNascimento, String telefone, String cpf) {
         this.nome = nome;
