@@ -1,5 +1,6 @@
 package com.velvetslice.pi_velvetslice.controller;
 
+import com.velvetslice.pi_velvetslice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,9 @@ import com.velvetslice.pi_velvetslice.services.CadastroService;
 import com.velvetslice.pi_velvetslice.services.LoginService;
 
 import jakarta.validation.Valid;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -36,10 +40,16 @@ public class AuthCadastroLoginController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginCliente(@Valid @RequestBody LoginUserDto loginUserDto) {
-        loginService.logar(loginUserDto);
-
-        return ResponseEntity.status(HttpStatus.OK).body("Login efetuado com sucesso");
-
+    public ResponseEntity<Map<String, Object>> loginCliente(@Valid @RequestBody LoginUserDto loginUserDto) {
+        User user = loginService.logar(loginUserDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Login efetuado com sucesso");
+        response.put("userId", user.getId());
+        response.put("nome", user.getNome());
+        response.put("email", user.getEmail());
+        if (user.getCliente() != null) {
+            response.put("clienteId", user.getCliente().getId());
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

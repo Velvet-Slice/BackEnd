@@ -3,6 +3,7 @@ package com.velvetslice.pi_velvetslice.services;
 
 import com.velvetslice.pi_velvetslice.dto.PedidoDto;
 import com.velvetslice.pi_velvetslice.exception.ProdutoNulloException;
+import com.velvetslice.pi_velvetslice.models.ItemPedido;
 import com.velvetslice.pi_velvetslice.models.Pedido;
 import com.velvetslice.pi_velvetslice.repository.PedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
