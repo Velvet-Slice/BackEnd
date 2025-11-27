@@ -1,5 +1,6 @@
 package com.velvetslice.pi_velvetslice.services;
 
+import com.velvetslice.pi_velvetslice.dto.PedidoCheckoutDTO;
 import com.velvetslice.pi_velvetslice.enums.StatusPedido;
 import com.velvetslice.pi_velvetslice.models.ItemPedido;
 import com.velvetslice.pi_velvetslice.models.Pedido;
@@ -18,12 +19,21 @@ public class CheckoutService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    public Pedido checkout(Long clienteId, LocalDate dataEntrega) {
+    public Pedido checkout(PedidoCheckoutDTO dto) {
+
+        if (dto.getClienteId() == null) {
+            throw new RuntimeException("ClienteId é obrigatório.");
+        }
+
+        if (dto.getDataEntrega() == null || dto.getDataEntrega().isBlank()) {
+            throw new RuntimeException("Data de entrega é obrigatória.");
+        }
+
+        LocalDate dataEntrega = LocalDate.parse(dto.getDataEntrega());
 
         Pedido pedido = pedidoRepository
-                .findByClienteIdAndStatus(clienteId, StatusPedido.ABERTO)
+                .findByClienteIdAndStatus(dto.getClienteId(), StatusPedido.ABERTO)
                 .orElseThrow(() -> new RuntimeException("Carrinho vazio."));
-
 
         LocalDate dataMinima = pedido.getDataPedido().toLocalDate().plusDays(5);
 
@@ -31,11 +41,12 @@ public class CheckoutService {
             throw new RuntimeException("A data de entrega deve ser pelo menos 5 dias após o pedido.");
         }
 
-        if (dataEntrega == null) {
-            throw new RuntimeException("Data de entrega obrigatória.");
-        }
-
         pedido.setDataEntrega(dataEntrega);
+
+        // 🔥 SALVAR OBSERVAÇÕES AQUI
+        if (dto.getObservacoes() != null && !dto.getObservacoes().isBlank()) {
+            pedido.setDescricao(dto.getObservacoes());
+        }
 
         pedido.setStatus(StatusPedido.EM_NEGOCIACAO);
 
@@ -68,8 +79,10 @@ public class CheckoutService {
             }
             msg.append("*CPF:* ").append(pedido.getCliente().getCpf()).append("\n\n");
 
+            if (pedido.getDescricao() != null && !pedido.getDescricao().isBlank()) {
+                msg.append("*Observações:* ").append(pedido.getDescricao()).append("\n\n");
+            }
             msg.append("*Itens do Carrinho:*\n");
-
 
             for (ItemPedido item : pedido.getItens()) {
                 String subtotalFormatado = String.format("%.2f", item.getSubtotal());

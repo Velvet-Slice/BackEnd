@@ -1,5 +1,6 @@
 package com.velvetslice.pi_velvetslice.controller;
 
+import com.velvetslice.pi_velvetslice.dto.PedidoCheckoutDTO;
 import com.velvetslice.pi_velvetslice.models.Pedido;
 import com.velvetslice.pi_velvetslice.services.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,9 @@ public class CheckoutController {
     private CheckoutService checkoutService;
 
     @PostMapping("/checkout")
-    public ResponseEntity<Map<String, Object>> checkout(
-            @RequestParam Long clienteId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataEntrega
-    ) {
+    public ResponseEntity<Map<String, Object>> checkout(@RequestBody PedidoCheckoutDTO dto) {
 
-        Pedido pedido = checkoutService.checkout(clienteId, dataEntrega);
+        Pedido pedido = checkoutService.checkout(dto);
 
         String whatsappUrl = checkoutService.gerarMensagemWhatsapp(pedido);
 
@@ -34,5 +32,4 @@ public class CheckoutController {
 
         return ResponseEntity.ok(resposta);
     }
-
 }
