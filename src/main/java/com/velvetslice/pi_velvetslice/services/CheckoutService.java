@@ -19,35 +19,28 @@ public class CheckoutService {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    public Pedido checkout(PedidoCheckoutDTO dto) {
-
-        if (dto.getClienteId() == null) {
-            throw new RuntimeException("ClienteId é obrigatório.");
-        }
-
-        if (dto.getDataEntrega() == null || dto.getDataEntrega().isBlank()) {
-            throw new RuntimeException("Data de entrega é obrigatória.");
-        }
-
-        LocalDate dataEntrega = LocalDate.parse(dto.getDataEntrega());
+    public Pedido checkout(Long clienteId, LocalDate dataEntrega) {
 
         Pedido pedido = pedidoRepository
-                .findByClienteIdAndStatus(dto.getClienteId(), StatusPedido.ABERTO)
-                .orElseThrow(() -> new RuntimeException("Carrinho vazio."));
+                .findByClienteIdAndStatus(clienteId, StatusPedido.ABERTO)
+                .orElseThrow(() -> new RuntimeException("Carrinho vazio ou não encontrado."));
 
-        LocalDate dataMinima = pedido.getDataPedido().toLocalDate().plusDays(5);
+        // CORREÇÃO: Usar LocalDate.now() para garantir 5 dias a partir de HOJE (dia do fechamento)
+        LocalDate hoje = LocalDate.now();
+        LocalDate dataMinima = hoje.plusDays(5);
 
+        // Se dataEntrega for antes da dataMinima, erro.
         if (dataEntrega.isBefore(dataMinima)) {
-            throw new RuntimeException("A data de entrega deve ser pelo menos 5 dias após o pedido.");
+            // Dica: Formate a data para mostrar pro usuário qual a data mínima
+            String dataMinimaStr = dataMinima.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            throw new RuntimeException("A data de entrega deve ser a partir de " + dataMinimaStr + " (mínimo 5 dias).");
+        }
+
+        if (dataEntrega == null) {
+            throw new RuntimeException("Data de entrega obrigatória.");
         }
 
         pedido.setDataEntrega(dataEntrega);
-
-        // 🔥 SALVAR OBSERVAÇÕES AQUI
-        if (dto.getObservacoes() != null && !dto.getObservacoes().isBlank()) {
-            pedido.setDescricao(dto.getObservacoes());
-        }
-
         pedido.setStatus(StatusPedido.EM_NEGOCIACAO);
 
         return pedidoRepository.save(pedido);

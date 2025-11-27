@@ -4,11 +4,9 @@ import com.velvetslice.pi_velvetslice.dto.PedidoCheckoutDTO;
 import com.velvetslice.pi_velvetslice.models.Pedido;
 import com.velvetslice.pi_velvetslice.services.CheckoutService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +20,7 @@ public class CheckoutController {
     @PostMapping("/checkout")
     public ResponseEntity<Map<String, Object>> checkout(@RequestBody PedidoCheckoutDTO dto) {
 
-        Pedido pedido = checkoutService.checkout(dto);
+        Pedido pedido = checkoutService.checkout(dto.getClienteId(), dto.getDataEntrega());
 
         String whatsappUrl = checkoutService.gerarMensagemWhatsapp(pedido);
 
