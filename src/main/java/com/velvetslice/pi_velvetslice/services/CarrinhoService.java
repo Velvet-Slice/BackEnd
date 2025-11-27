@@ -43,7 +43,8 @@ public class CarrinhoService {
             pedido.setStatus(StatusPedido.ABERTO);
             pedido.setDataPedido(LocalDateTime.now());
             pedido.setValorTotal(BigDecimal.ZERO);
-            pedidoRepository.save(pedido);
+
+            pedido = pedidoRepository.save(pedido);
         }
 
         ItemPedido item = new ItemPedido();
