@@ -51,7 +51,7 @@ public class CarrinhoService {
         item.setPedido(pedido);
         item.setProduto(produto);
         item.setQuantidade(dto.getQuantidade());
-        item.setPrecoUnitario(produto.getPreco()); // Pega do produto
+        item.setPrecoUnitario(produto.getPreco());
         item.setSubtotal(produto.getPreco().multiply(BigDecimal.valueOf(dto.getQuantidade())));
 
         itemPedidoRepository.save(item);
@@ -86,6 +86,38 @@ public class CarrinhoService {
 
         pedido.setValorTotal(BigDecimal.ZERO);
 
+        pedidoRepository.save(pedido);
+    }
+
+    public ItemPedido atualizarQuantidade(Long idItem, int novaQuantidade) {
+        ItemPedido item = itemPedidoRepository.findById(idItem)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
+
+        item.setQuantidade(novaQuantidade);
+        item.setSubtotal(item.getPrecoUnitario().multiply(BigDecimal.valueOf(novaQuantidade)));
+        itemPedidoRepository.save(item);
+
+        atualizarTotalPedido(item.getPedido());
+
+        return item;
+    }
+
+    public void removerItem(Long idItem) {
+        ItemPedido item = itemPedidoRepository.findById(idItem)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
+
+        Pedido pedido = item.getPedido();
+        pedido.getItens().remove(item); // Remove da lista em memória do pedido
+        itemPedidoRepository.delete(item); // Remove do banco
+
+        atualizarTotalPedido(pedido);
+    }
+
+    private void atualizarTotalPedido(Pedido pedido) {
+        BigDecimal total = pedido.getItens().stream()
+                .map(ItemPedido::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        pedido.setValorTotal(total);
         pedidoRepository.save(pedido);
     }
 

@@ -30,7 +30,7 @@ public class Pedido {
     @Column(name = "data_pedido", nullable = false)
     private LocalDateTime dataPedido = LocalDateTime.now();
 
-    @Column(name = "data_entrega", nullable = false)
+    @Column(name = "data_entrega")
     private LocalDate dataEntrega;
 
     @ManyToOne
