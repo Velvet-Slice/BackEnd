@@ -1,18 +1,27 @@
 package com.velvetslice.pi_velvetslice.controller;
 
-import com.velvetslice.pi_velvetslice.dto.ClienteAdminDto;
-import com.velvetslice.pi_velvetslice.models.User;
-import com.velvetslice.pi_velvetslice.services.ClienteAdminService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import com.velvetslice.pi_velvetslice.dto.ClienteAdminDto;
+import com.velvetslice.pi_velvetslice.models.User;
+import com.velvetslice.pi_velvetslice.services.ClienteAdminService;
 
 @RestController
-@RequestMapping("/admin/clientes") // Endpoint específico para admin
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Permite conexão com seu Frontend
+@RequestMapping("/admin/clientes")
+@CrossOrigin(origins = "*") // Permite acesso de qualquer origem (ajuste para produção)
 public class ClienteAdminController {
 
     @Autowired
@@ -35,7 +44,7 @@ public class ClienteAdminController {
             User userAtualizado = service.editar(id, dto);
             return ResponseEntity.ok(userAtualizado);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build(); // Retorna 400 com erro
         }
     }
 
