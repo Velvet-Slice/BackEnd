@@ -1,19 +1,30 @@
 package com.velvetslice.pi_velvetslice.models;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.velvetslice.pi_velvetslice.enums.StatusPedido;
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.velvetslice.pi_velvetslice.enums.StatusPedido;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "pedidos")
@@ -50,6 +61,11 @@ public class Pedido {
     @Column(name = "descricaoPed", columnDefinition = "TEXT")
     private String descricao;
 
+    // --- NOVO CAMPO ADICIONADO ---
+    @Column(name = "is_pago")
+    private boolean pago;
+
+    // Métodos auxiliares (mantidos)
     public void adicionarItem(ItemPedido item) {
         item.setPedido(this);
         this.itens.add(item);
@@ -60,15 +76,5 @@ public class Pedido {
         return itens.stream()
                 .map(ItemPedido::getSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public Pedido(Long id, LocalDateTime dataPedido, LocalDate dataEntrega, Cliente cliente, List<ItemPedido> itens, StatusPedido status, BigDecimal valorTotal) {
-        this.id = id;
-        this.dataPedido = LocalDateTime.now();
-        this.dataEntrega = dataEntrega;
-        this.cliente = cliente;
-        this.itens = itens;
-        this.status = StatusPedido.ABERTO;
-        this.valorTotal = valorTotal;
     }
 }
